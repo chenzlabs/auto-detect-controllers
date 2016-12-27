@@ -67,18 +67,17 @@
 	        this.checkControllerType = this.checkControllerType.bind(this);
 	        this.rescheduleControllerTypeCheck = this.rescheduleControllerTypeCheck.bind(this);
 	        // allow mock for testing
-	        this.getGamepads = navigator.getGamepads;
+	        this.getGamepads = function () { return navigator.getGamepads && navigator.getGamepads(); };
 	    },
 
 	    update: function () {
 	        var data = this.data;
 	        var el = this.el;
-		// TODO
-	        this.rescheduleControllerTypeCheck();
+	    	// TODO
 	    },
 
 	    play: function () {
-		// TODO
+	        this.rescheduleControllerTypeCheck();
 	    },
 
 	    pause: function () {
@@ -91,7 +90,7 @@
 
 	    injectOculusTouch: function () {
 	        var component = this.data.trackedcontrols ? 'tracked-controls' : 'oculus-touch-controls';
-	        if (this.data.trackedControls) {
+	        if (this.data.trackedcontrols) {
 	            this.el.setAttribute('tracked-controls', 'id', 'Oculus Touch ' + (this.data.hand === 'left' ? '(Left)' : '(Right)'));
 	            this.el.setAttribute('tracked-controls', 'controller', '0');
 	        }
@@ -101,7 +100,7 @@
 
 	    injectVive: function () {
 	        var component = this.data.trackedcontrols ? 'tracked-controls' : 'vive-controls';
-	        if (this.data.trackedControls) {
+	        if (this.data.trackedcontrols) {
 	            this.el.setAttribute('tracked-controls', 'id', 'OpenVR Gamepad');
 	            this.el.setAttribute('tracked-controls', 'controller', this.data.hand === 'left' ? '1' : '0');
 	        }

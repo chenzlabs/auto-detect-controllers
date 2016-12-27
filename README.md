@@ -2,20 +2,14 @@
 
 Auto-Detect Controllers component for [A-Frame](https://aframe.io).
 
----
-title: auto-detect-controllers
-type: components
-layout: docs
-parent_section: components
----
-
+[trackedcontrols]: ./tracked-controls.md
 [oculustouchcontrols]: ./oculus-touch-controls.md
 [vivecontrols]: ./vive-controls.md
 
 The auto-detect-controllers component interfaces with the Gamepad API
 to detect Oculus Touch or Vive tracked-position controllers, 
 and when discovered it injects the appropriate controls e.g.
-[oculus-touch-controls][oculustouchcontrols] or [vive-controls][vivecontrols].
+[tracked-controls][trackedcontrols], [oculus-touch-controls][oculustouchcontrols] or [vive-controls][vivecontrols].
 
 ## Example
 

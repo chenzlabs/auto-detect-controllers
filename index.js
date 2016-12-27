@@ -1,1 +1,1 @@
-require('auto-detect-controllers');
+require('./auto-detect-controllers');

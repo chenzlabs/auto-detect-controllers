@@ -42,13 +42,21 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(1);
+
+
+/***/ },
+/* 1 */
 /***/ function(module, exports) {
 
 	/* globals AFRAME */
 	AFRAME.registerComponent('auto-detect-controllers', {
 	    schema: {
-	        hand: { default: 'right' },
-	        singlehand: { default: 'right' }
+	        hand: { type: 'string', default: 'right' },
+	        trackedcontrols: { type: 'boolean', default: true },
+	        singlehand: { type: 'string', default: 'right' }
 	    },
 
 	    init: function () {
@@ -56,6 +64,8 @@
 	        var self = this;
 	        this.rescheduleCheck = true;
 	        this.injectedControls = false;
+	        this.checkControllerType = this.checkControllerType.bind(this);
+	        this.rescheduleControllerTypeCheck = this.rescheduleControllerTypeCheck.bind(this);
 	        // allow mock for testing
 	        this.getGamepads = navigator.getGamepads;
 	    },
@@ -63,37 +73,47 @@
 	    update: function () {
 	        var data = this.data;
 	        var el = this.el;
-	        this.rescheduleControllerTypeCheck = this.rescheduleControllerTypeCheck.bind(this);
+		// TODO
+	        this.rescheduleControllerTypeCheck();
 	    },
 
 	    play: function () {
-	        this.rescheduleControllerTypeCheck();
+		// TODO
 	    },
 
 	    pause: function () {
 	        this.rescheduleCheck = false;
-	        if (this.rescheduleCheckTimeout) { cancelTimeout(this.rescheduleCheckTimeout); }
+	        if (this.rescheduleCheckTimeout) {
+	            clearTimeout(this.rescheduleCheckTimeout);
+	            delete this.rescheduleCheckTimeout;
+	        }
 	    },
 
 	    injectOculusTouch: function () {
+	        var component = this.data.trackedcontrols ? 'tracked-controls' : 'oculus-touch-controls';
+	        if (this.data.trackedControls) {
+	            this.el.setAttribute('tracked-controls', 'id', 'Oculus Touch ' + (this.data.hand === 'left' ? '(Left)' : '(Right)'));
+	            this.el.setAttribute('tracked-controls', 'controller', '0');
+	        }
+	        this.el.setAttribute(component, 'hand', this.data.hand); // although tracked-controls doesn't use this yet
 	        this.injectedControls = true;
-	        this.el.setAttribute('tracked-controls', 'id', 'Oculus Touch ' + (this.data.hand === 'left' ? '(Left)' : '(Right)'));
-	        this.el.setAttribute('tracked-controls', 'controller', '0');
-	        this.el.setAttribute('tracked-controls', 'hand', this.data.hand); // although tracked-controls doesn't use this yet
 	    },
 
 	    injectVive: function () {
+	        var component = this.data.trackedcontrols ? 'tracked-controls' : 'vive-controls';
+	        if (this.data.trackedControls) {
+	            this.el.setAttribute('tracked-controls', 'id', 'OpenVR Gamepad');
+	            this.el.setAttribute('tracked-controls', 'controller', this.data.hand === 'left' ? '1' : '0');
+	        }
+	        this.el.setAttribute(component, 'hand', this.data.hand); // although tracked-controls doesn't use this yet
 	        this.injectedControls = true;
-	        this.el.setAttribute('tracked-controls', 'id', 'OpenVR Gamepad');
-	        this.el.setAttribute('tracked-controls', 'controller', this.data.hand === 'left' ? '1' : '0');
-	        this.el.setAttribute('tracked-controls', 'hand', this.data.hand); // although tracked-controls doesn't use this yet
 	    },
 
 	    injectGearVR: function () {
-	        this.injectedControls = true;
 	        if (this.data.hand === this.data.singlehand) {
 	            this.el.setAttribute('gearvr-controls', 'hand', this.data.hand);
 	        }
+	        this.injectedControls = true;
 	    },
 
 	    checkControllerType: function () {
@@ -130,6 +150,7 @@
 	        }
 	    }
 	});
+
 
 /***/ }
 /******/ ]);

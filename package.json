@@ -34,7 +34,7 @@
   "author": "Michael Chen <machenmusik@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chenzlabs/auto=detect-controllers/issues"
+    "url": "https://github.com/chenzlabs/auto-detect-controllers/issues"
   },
   "homepage": "https://github.com/chenzlabs/auto-detect-controllers#readme",
   "devDependencies": {

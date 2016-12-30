@@ -33,13 +33,15 @@ suite(componentName, function () {
       assert.notOk(component.injectedControls);
     });
 
-    test('if Oculus Touch controllers, inject tracked-controls', function (done) {
+    test('if Oculus Touch controllers and trackedcontrols true, inject tracked-controls', function (done) {
       var el = this.el;
       var component = el.components[componentName];
       var injectOculusTouchSpy = this.sinon.spy(component, 'injectOculusTouch');
       var injectViveSpy = this.sinon.spy(component, 'injectVive');
       var injectGearVRSpy = this.sinon.spy(component, 'injectGearVR');
-        // mock isControllerPresent to return false
+      el.setAttribute(componentName, 'trackedcontrols', 'true');
+      assert.equal(component.data.trackedcontrols, true);
+      // mock isControllerPresent to return false
       component.getGamepadsMockValue = [{id: 'Oculus Touch (Left)'}, null, null];
       // reset so we don't think we've looked before
       delete component.injectedControls;
@@ -56,14 +58,12 @@ suite(componentName, function () {
       });
     });
 
-    test('if Oculus Touch controllers and not trackedcontrols, inject oculus-touch-controls', function (done) {
+    test('if Oculus Touch controllers, inject oculus-touch-controls', function (done) {
         var el = this.el;
         var component = el.components[componentName];
         var injectOculusTouchSpy = this.sinon.spy(component, 'injectOculusTouch');
         var injectViveSpy = this.sinon.spy(component, 'injectVive');
         var injectGearVRSpy = this.sinon.spy(component, 'injectGearVR');
-        el.setAttribute(componentName, 'trackedcontrols', 'false');
-        assert.equal(component.data.trackedcontrols, false);
         // mock isControllerPresent to return false
         component.getGamepadsMockValue = [{ id: 'Oculus Touch (Left)' }, null, null];
         // reset so we don't think we've looked before
@@ -81,12 +81,14 @@ suite(componentName, function () {
         });
     });
 
-    test('if Vive controllers, inject tracked-controls', function (done) {
+    test('if Vive controllers and trackedcontrols true, inject tracked-controls', function (done) {
         var el = this.el;
         var component = el.components[componentName];
         var injectOculusTouchSpy = this.sinon.spy(component, 'injectOculusTouch');
         var injectViveSpy = this.sinon.spy(component, 'injectVive');
         var injectGearVRSpy = this.sinon.spy(component, 'injectGearVR');
+        el.setAttribute(componentName, 'trackedcontrols', 'true');
+        assert.equal(component.data.trackedcontrols, true);
         // mock isControllerPresent to return false
         component.getGamepadsMockValue = [{ id: 'OpenVR Gamepad' }, null, null, null];
         // reset so we don't think we've looked before
@@ -110,8 +112,6 @@ suite(componentName, function () {
         var injectOculusTouchSpy = this.sinon.spy(component, 'injectOculusTouch');
         var injectViveSpy = this.sinon.spy(component, 'injectVive');
         var injectGearVRSpy = this.sinon.spy(component, 'injectGearVR');
-        el.setAttribute(componentName, 'trackedcontrols', 'false');
-        assert.equal(component.data.trackedcontrols, false);
         // mock isControllerPresent to return false
         component.getGamepadsMockValue = [{ id: 'OpenVR Gamepad' }, null, null];
         // reset so we don't think we've looked before

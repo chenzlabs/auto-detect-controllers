@@ -23,7 +23,8 @@ and when discovered it injects the appropriate controls e.g.
 |----------------------|----------------------------------------------------|----------------------|
 | hand                 | When detected, inject controls with this hand.     | 'right'              |
 | singlehand           | Single-hand controllers inject with this hand.     | 'right'              |
-| trackedcontrols      | Inject `tracked-controls` not e.g. `vive-controls` | true                 |
+| trackedcontrols      | Inject `tracked-controls` not e.g. `vive-controls` | false                |
+| model                | Inject with this model property value.             | true                 |
 
 ## Events
 
@@ -45,8 +46,9 @@ Install and use by directly including the [browser files](dist):
 
 <body>
   <a-scene>
-    <a-entity id="lefthand" auto-detect-controllers="hand:left; trackedcontrols:false"></a-entity>
-    <a-entity id="righthand" auto-detect-controllers="hand:right; trackedcontrols:false"></a-entity>
+    <!-- If detected, will use built-in controller model (e.g. Oculus Touch or Vive) -->
+    <a-entity id="lefthand" auto-detect-controllers="hand:left"></a-entity>
+    <a-entity id="righthand" auto-detect-controllers="hand:right"></a-entity>
   </a-scene>
 </body>
 ```

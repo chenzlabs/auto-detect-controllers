@@ -55,7 +55,8 @@
 	AFRAME.registerComponent('auto-detect-controllers', {
 	    schema: {
 	        hand: { type: 'string', default: 'right' },
-	        trackedcontrols: { type: 'boolean', default: true },
+	        trackedcontrols: { type: 'boolean', default: false },
+	        model: { type: 'boolean', default: true },
 	        singlehand: { type: 'string', default: 'right' }
 	    },
 
@@ -93,7 +94,9 @@
 	        if (this.data.trackedcontrols) {
 	            this.el.setAttribute('tracked-controls', 'id', 'Oculus Touch ' + (this.data.hand === 'left' ? '(Left)' : '(Right)'));
 	            this.el.setAttribute('tracked-controls', 'controller', '0');
-	        }
+	        } else {
+	            this.el.setAttribute(component, 'model', this.data.model);
+		}
 	        this.el.setAttribute(component, 'hand', this.data.hand); // although tracked-controls doesn't use this yet
 	        this.injectedControls = true;
 	    },
@@ -103,6 +106,8 @@
 	        if (this.data.trackedcontrols) {
 	            this.el.setAttribute('tracked-controls', 'id', 'OpenVR Gamepad');
 	            this.el.setAttribute('tracked-controls', 'controller', this.data.hand === 'left' ? '1' : '0');
+	        } else {
+	            this.el.setAttribute(component, 'model', this.data.model);
 	        }
 	        this.el.setAttribute(component, 'hand', this.data.hand); // although tracked-controls doesn't use this yet
 	        this.injectedControls = true;

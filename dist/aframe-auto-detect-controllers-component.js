@@ -91,25 +91,29 @@
 
 	    injectOculusTouch: function () {
 	        var component = this.data.trackedcontrols ? 'tracked-controls' : 'oculus-touch-controls';
+		var options = '';
 	        if (this.data.trackedcontrols) {
-	            this.el.setAttribute('tracked-controls', 'id', 'Oculus Touch ' + (this.data.hand === 'left' ? '(Left)' : '(Right)'));
-	            this.el.setAttribute('tracked-controls', 'controller', '0');
+		    options += 'id:Oculus Touch ' + (this.data.hand === 'left' ? '(Left)' : '(Right)');
+	            options += ';controller:0';
 	        } else {
-	            this.el.setAttribute(component, 'model', this.data.model);
-		}
-	        this.el.setAttribute(component, 'hand', this.data.hand); // although tracked-controls doesn't use this yet
+	            options += 'model:' + this.data.model;
+	        }
+	        options += ';hand:' + this.data.hand; // although tracked-controls doesn't use this yet
+	        this.el.setAttribute(component, options);
 	        this.injectedControls = true;
 	    },
 
 	    injectVive: function () {
 	        var component = this.data.trackedcontrols ? 'tracked-controls' : 'vive-controls';
+		var options = '';
 	        if (this.data.trackedcontrols) {
-	            this.el.setAttribute('tracked-controls', 'id', 'OpenVR Gamepad');
-	            this.el.setAttribute('tracked-controls', 'controller', this.data.hand === 'left' ? '1' : '0');
+		    options += 'id:OpenVR Gamepad';
+	            options += ';controller:' +  (this.data.hand === 'left' ? 1 : 0);
 	        } else {
-	            this.el.setAttribute(component, 'model', this.data.model);
+	            options += 'model:' + this.data.model;
 	        }
-	        this.el.setAttribute(component, 'hand', this.data.hand); // although tracked-controls doesn't use this yet
+	        options += ';hand:' + this.data.hand; // although tracked-controls doesn't use this yet
+	        this.el.setAttribute(component, options);
 	        this.injectedControls = true;
 	    },
 

@@ -1,6 +1,6 @@
 {
   "name": "aframe-auto-detect-controllers-component",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Auto-Detect Controllers component for A-Frame.",
   "main": "index.js",
   "scripts": {
